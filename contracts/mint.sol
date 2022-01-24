@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: UNLICENSED
 // Recieve a NFT and mint ERC-20 bond tokens
 
-pragma solidity ^0.8.10;
+pragma solidity ^0.8.0;
 
 import "../node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 

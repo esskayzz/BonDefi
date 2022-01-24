@@ -5,9 +5,10 @@ pragma solidity ^0.8.0;
 import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "../node_modules/openzeppelin-solidity/contracts/access/Ownable.sol";
 import "../node_modules/openzeppelin-solidity/contracts/utils/Counters.sol";
+import "../node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 
 //NFT inherits ERC721 token contract
-contract MyNFT is ERC721URIStorage, Ownable {
+contract BonDeFiNFT is ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
@@ -22,5 +23,25 @@ contract MyNFT is ERC721URIStorage, Ownable {
         _setTokenURI(tokenId, tokenURI);
 
         return tokenId;
+    }
+}
+
+//mints the erc-20 and gives it to the contract caller
+contract bondtoken is ERC20 {
+    constructor(
+        string memory name,
+        string memory symbol,
+        uint256 supply
+    ) ERC20(name, symbol) {
+        _mint(msg.sender, supply);
+    }
+
+    function createToken(
+        uint256 tokenId,
+        BonDeFiNFT _nft,
+        uint256 number
+    ) public {
+        address myAddress = _nft.ownerOf(tokenId);
+        _mint(myAddress, number);
     }
 }
